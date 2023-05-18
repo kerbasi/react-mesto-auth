@@ -1,0 +1,12 @@
+﻿.popup__container_type_image {
+  position: relative;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+  border-radius: 0;
+  background: transparent;
+  width: auto;
+  height: auto;
+  max-width: 75vw;
+  max-height: 75vh;
+  display: flex;
+  flex-direction: column;
+}

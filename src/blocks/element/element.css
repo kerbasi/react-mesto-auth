@@ -1,0 +1,13 @@
+﻿.element {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr) min-content;
+  grid-template-rows: calc(282 / 361 * 100%) 1fr;
+  border-radius: 10px;
+  background: #fff;
+  color: #000;
+  align-items: center;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  width: 282px;
+  height: 361px;
+  position: relative;
+}

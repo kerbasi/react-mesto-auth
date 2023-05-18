@@ -1,0 +1,5 @@
+﻿@media screen and (max-width: 768px) {
+  .profile__edit-image {
+    width: calc(7.5 / 18 * 100%);
+  }
+}

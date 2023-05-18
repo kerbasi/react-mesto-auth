@@ -1,0 +1,22 @@
+﻿.profile__avatar-wrapper {
+  position: relative;
+}
+
+.profile__avatar-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 120px;
+  background-color: rgba(0, 0, 0, 0.8);
+  background-image: url(../../../images/edit.svg);
+  background-size: 26px;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+.profile__avatar-wrapper:hover::after {
+  z-index: 20;
+}

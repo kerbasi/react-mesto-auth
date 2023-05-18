@@ -1,0 +1,19 @@
+﻿.element__heart-image {
+  border: transparent;
+  justify-self: end;
+  margin-right: 20px;
+  width: 22px;
+  height: 19px;
+  background: url(../../../images/heart.svg) #fff no-repeat;
+}
+
+.element__heart-image:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+@media (hover: none) {
+  .element__heart-image:hover {
+    opacity: 1;
+  }
+}

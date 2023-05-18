@@ -1,0 +1,6 @@
+﻿.element__heart-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+}
