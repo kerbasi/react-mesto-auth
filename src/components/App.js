@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import { Route, Routes, Navigate } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -10,6 +10,8 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import DeleteCardPopup from "./DeleteCardPopup";
+import Login from "./Login";
+import Register from "./Register";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -138,8 +140,11 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Header />
-
-      {currentUser && (
+      <Routes>
+        <Route path='/sign-up' element={Register} />
+        <Route path='/sign-in' element={Login} />
+      </Routes>
+      {/* {currentUser && (
         <Main
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
@@ -150,8 +155,7 @@ function App() {
           cards={cards}
           onCardDelete={handleDeleteCardClick}
         />
-      )}
-
+      )} */}
       <Footer />
 
       {currentUser && (
