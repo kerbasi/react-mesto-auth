@@ -1,0 +1,15 @@
+﻿.main__input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  height: 27px;
+  margin-top: 26px;
+}
+
+.main__input:first-of-type {
+  margin-top: 45px;
+}
+
+.main__input::placeholder {
+  color: #ccc;
+}
