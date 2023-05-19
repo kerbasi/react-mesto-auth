@@ -1,5 +1,5 @@
 ﻿import PopupWithForm from "./PopupWithForm";
-import { useState, useContext, useEffect, useCallback } from "react";
+import { useState, useContext, useEffect } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { useFormAndValidation } from "../hooks/useFormAndValidation";
 
