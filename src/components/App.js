@@ -34,6 +34,9 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setIsLoggedIn(true);
+    }
     api
       .getUserInfo()
       .then((data) => {
@@ -148,7 +151,8 @@ function App() {
         <Route
           path='/'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute
+              currentUser={currentUser}
               element={Main}
               onEditProfile={handleEditProfileClick}
               onAddPlace={handleAddPlaceClick}
@@ -158,12 +162,15 @@ function App() {
               onCardLike={handleCardLike}
               cards={cards}
               onCardDelete={handleDeleteCardClick}
-              isLoggedIn
-            </ProtectedRoute>
+              isLoggedIn={isLoggedIn}
+            ></ProtectedRoute>
           }
         />
         <Route path='/sign-up' element={<Register />} />
-        <Route path='/sign-in' element={<Login />} />
+        <Route
+          path='/sign-in'
+          element={<Login setIsLoggedIn={setIsLoggedIn} />}
+        />
       </Routes>
       <Footer />
 
