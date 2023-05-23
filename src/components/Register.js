@@ -2,7 +2,7 @@
 import * as auth from "../utils/auth";
 import { useNavigate } from "react-router-dom";
 
-function Register() {
+function Register({ setIsFailPopupOpen, setIsSuccessPopupOpen }) {
   const [values, setValues] = useState({});
 
   const navigate = useNavigate();
@@ -18,7 +18,10 @@ function Register() {
       const { email, password } = values;
       auth.register(email, password).then((res) => {
         if (res) {
+          setIsSuccessPopupOpen(true);
           navigate("/sign-in", { replace: true });
+        } else {
+          setIsFailPopupOpen(true);
         }
       });
     }

@@ -10,6 +10,8 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import DeleteCardPopup from "./DeleteCardPopup";
+import SuccessPopup from "./SuccessPopup";
+import FailPopup from "./FailPopup";
 import Login from "./Login";
 import Register from "./Register";
 import ProtectedRoute from "./ProtectedRoute";
@@ -19,19 +21,13 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = useState(false);
+  const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
+  const [isFailPopupOpen, setIsFailPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [deletedCard, setDeletedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const [cards, setCards] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const isOpen =
-    isEditAvatarPopupOpen ||
-    isEditProfilePopupOpen ||
-    isAddPlacePopupOpen ||
-    selectedCard;
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -77,6 +73,8 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsDeleteCardPopupOpen(false);
+    setIsSuccessPopupOpen(false);
+    setIsFailPopupOpen(false);
     setSelectedCard(null);
   };
 
@@ -166,10 +164,23 @@ function App() {
             ></ProtectedRoute>
           }
         />
-        <Route path='/sign-up' element={<Register />} />
+        <Route
+          path='/sign-up'
+          element={
+            <Register
+              setIsFailPopupOpen={setIsFailPopupOpen}
+              setIsSuccessPopupOpen={setIsSuccessPopupOpen}
+            />
+          }
+        />
         <Route
           path='/sign-in'
-          element={<Login setIsLoggedIn={setIsLoggedIn} />}
+          element={
+            <Login
+              setIsLoggedIn={setIsLoggedIn}
+              setIsFailPopupOpen={setIsFailPopupOpen}
+            />
+          }
         />
       </Routes>
       <Footer />
@@ -203,6 +214,8 @@ function App() {
         </>
       )}
       <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+      <SuccessPopup isOpen={isSuccessPopupOpen} onClose={closeAllPopups} />
+      <FailPopup isOpen={isFailPopupOpen} onClose={closeAllPopups} />
     </CurrentUserContext.Provider>
   );
 }

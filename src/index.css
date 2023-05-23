@@ -43,10 +43,12 @@
 @import url(./blocks/popup/__container/_type_avatar/popup__container_type_avatar.css);
 @import url(./blocks/popup/__cross/popup__cross.css);
 @import url(./blocks/popup/__cross-image/popup__cross-image.css);
+@import url(./blocks/popup/__main-image/popup__main-image.css);
 @import url(./blocks/popup/__form/popup__form.css);
 @import url(./blocks/popup/__title/popup__title.css);
 @import url(./blocks/popup/__title/_type_image/popup__title_type_image.css);
 @import url(./blocks/popup/__title/_type_submit/popup__title_type_submit.css);
+@import url(./blocks/popup/__title/_type_main/popup__title_type_main.css);
 @import url(./blocks/popup/__input/popup__input.css);
 @import url(./blocks/popup/__input-wrapper/popup__input-wrapper.css);
 @import url(./blocks/popup/__input/_type_error/popup__input_type_error.css);

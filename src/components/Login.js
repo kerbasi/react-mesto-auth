@@ -2,7 +2,7 @@
 import * as auth from "../utils/auth";
 import { useNavigate } from "react-router-dom";
 
-function Login({ setIsLoggedIn }) {
+function Login({ setIsLoggedIn, setIsFailPopupOpen }) {
   const [values, setValues] = useState({});
 
   const navigate = useNavigate();
@@ -21,6 +21,8 @@ function Login({ setIsLoggedIn }) {
           localStorage.setItem("token", res.token);
           setIsLoggedIn(true);
           navigate("/", { replace: true });
+        } else {
+          setIsFailPopupOpen(true);
         }
       });
     }
