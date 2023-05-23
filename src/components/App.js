@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
+import * as auth from "../utils/auth";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
@@ -31,21 +32,23 @@ function App() {
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      setIsLoggedIn(true);
+      auth.tokenCheck(localStorage.getItem("token")).then((res) => {
+        setIsLoggedIn(true);
+        api
+          .getUserInfo()
+          .then((data) => {
+            setCurrentUser({ ...data, email: res.data.email });
+          })
+          .catch((err) => console.log(err));
+        api
+          .getInitialCards()
+          .then((data) => {
+            setCards(data);
+          })
+          .catch((err) => console.log(err));
+      });
     }
-    api
-      .getUserInfo()
-      .then((data) => {
-        setCurrentUser(data);
-      })
-      .catch((err) => console.log(err));
-    api
-      .getInitialCards()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  }, [isLoggedIn]);
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
@@ -144,7 +147,7 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <Header />
+      <Header setCurrentUser={setCurrentUser} setIsLoggedIn={setIsLoggedIn} />
       <Routes>
         <Route
           path='/'

@@ -45,3 +45,26 @@ export const login = (email, password) => {
     })
     .catch((err) => console.log(err));
 };
+
+export const tokenCheck = (token) => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => {
+      try {
+        if (response.status === 200) {
+          return response.json();
+        }
+      } catch (e) {
+        return e;
+      }
+    })
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => console.log(err));
+};

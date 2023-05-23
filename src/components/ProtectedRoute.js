@@ -2,12 +2,9 @@
 
 function ProtectedRoute({ element: Component, ...props }) {
   const navigate = useNavigate();
+  console.log(props.isLoggedIn);
   return props.isLoggedIn ? (
-    props.currentUser ? (
-      <Component {...props} />
-    ) : (
-      <></>
-    )
+    <Component {...props} />
   ) : (
     navigate("/sign-in", { replace: true })
   );
