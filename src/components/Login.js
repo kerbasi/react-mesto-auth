@@ -1,11 +1,7 @@
 ﻿import { useState } from "react";
-import * as auth from "../utils/auth";
-import { useNavigate } from "react-router-dom";
 
-function Login({ setIsLoggedIn, setIsFailPopupOpen }) {
-  const [values, setValues] = useState({});
-
-  const navigate = useNavigate();
+function Login({ handleLogin }) {
+  const [values, setValues] = useState({ email: "", password: "" });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,16 +11,7 @@ function Login({ setIsLoggedIn, setIsFailPopupOpen }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (values.email && values.password) {
-      const { email, password } = values;
-      auth.login(email, password).then((res) => {
-        if (res) {
-          localStorage.setItem("token", res.token);
-          setIsLoggedIn(true);
-          navigate("/", { replace: true });
-        } else {
-          setIsFailPopupOpen(true);
-        }
-      });
+      handleLogin(values.email, values.password);
     }
   };
 

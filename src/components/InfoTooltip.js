@@ -4,14 +4,15 @@ import successPath from "../images/success.png";
 
 import { usePopupClose } from "../hooks/usePopupClose";
 
-function MainPopup({ isSuccess, isOpen, onClose }) {
-  console.log(isOpen);
-  const popupClassName = isOpen ? `popup popup_opened` : `popup`;
+function InfoTooltip({ isOpen, onClose }) {
+  const popupClassName = isOpen !== "close" ? `popup popup_opened` : `popup`;
 
-  usePopupClose(isOpen, onClose);
+  usePopupClose(isOpen !== "close", onClose);
+
+  const isSuccess = isOpen === "success";
 
   const image = isSuccess ? successPath : failPath;
-  const altText = isSuccess ? "изобразение галки" : "изображение крестика";
+  const altText = isSuccess ? "изображение галки" : "изображение крестика";
   const text = isSuccess
     ? `Вы успешно зарегистрировались!`
     : `Что-то пошло не так!
@@ -34,4 +35,4 @@ function MainPopup({ isSuccess, isOpen, onClose }) {
   );
 }
 
-export default MainPopup;
+export default InfoTooltip;

@@ -1,11 +1,8 @@
 ﻿import { useState } from "react";
-import * as auth from "../utils/auth";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-function Register({ setIsFailPopupOpen, setIsSuccessPopupOpen }) {
-  const [values, setValues] = useState({});
-
-  const navigate = useNavigate();
+function Register({ handleRegister }) {
+  const [values, setValues] = useState({ email: "", password: "" });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,15 +12,7 @@ function Register({ setIsFailPopupOpen, setIsSuccessPopupOpen }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (values.email && values.password) {
-      const { email, password } = values;
-      auth.register(email, password).then((res) => {
-        if (res) {
-          setIsSuccessPopupOpen(true);
-          navigate("/sign-in", { replace: true });
-        } else {
-          setIsFailPopupOpen(true);
-        }
-      });
+      handleRegister(values.email, values.password);
     }
   };
 
@@ -48,9 +37,9 @@ function Register({ setIsFailPopupOpen, setIsSuccessPopupOpen }) {
           onChange={handleChange}
         ></input>
         <button className='main__button'>Зарегистрироваться</button>
-        <a className='main__link' href='/sign-in'>
+        <Link className='main__link' to='/sign-in'>
           Уже зарегистрированы? Войти
-        </a>
+        </Link>
       </form>
     </main>
   );

@@ -3,12 +3,10 @@ import logoPath from "../images/logo.svg";
 import { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function Header({ setCurrentUser, setIsLoggedIn }) {
+function Header({ handleSignout }) {
   const currentUser = useContext(CurrentUserContext);
   const handleClick = () => {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    setCurrentUser(null);
+    handleSignout();
   };
   return (
     <header className='header page__header'>
@@ -19,7 +17,7 @@ function Header({ setCurrentUser, setIsLoggedIn }) {
             <Link to='#' className='header__link'>
               {currentUser.email}
             </Link>
-            <Link to='/sign-in' className='header__link' onClick={handleClick}>
+            <Link to='sign-in' className='header__link' onClick={handleClick}>
               Выйти
             </Link>
           </>

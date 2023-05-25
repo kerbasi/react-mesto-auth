@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  useNavigate,
+  redirect,
+  Navigate,
+} from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -11,8 +17,7 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import DeleteCardPopup from "./DeleteCardPopup";
-import SuccessPopup from "./SuccessPopup";
-import FailPopup from "./FailPopup";
+import InfoTooltip from "./InfoTooltip";
 import Login from "./Login";
 import Register from "./Register";
 import ProtectedRoute from "./ProtectedRoute";
@@ -22,16 +27,18 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = useState(false);
-  const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
-  const [isFailPopupOpen, setIsFailPopupOpen] = useState(false);
+  const [InfoTooltipState, setIsInfoTooltipState] = useState("close");
   const [selectedCard, setSelectedCard] = useState(null);
   const [deletedCard, setDeletedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const [cards, setCards] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
+      setIsLoggedIn(true);
       auth.tokenCheck(localStorage.getItem("token")).then((res) => {
         setIsLoggedIn(true);
         api
@@ -49,6 +56,35 @@ function App() {
       });
     }
   }, [isLoggedIn]);
+
+  const handleRegister = (email, password) => {
+    auth.register(email, password).then((res) => {
+      if (res) {
+        setIsInfoTooltipState("success");
+        navigate("/sign-in", { replace: true });
+      } else {
+        setIsInfoTooltipState("fail");
+      }
+    });
+  };
+
+  const handleLogin = (email, password) => {
+    auth.login(email, password).then((res) => {
+      if (res) {
+        localStorage.setItem("token", res.token);
+        setIsLoggedIn(true);
+        navigate("/", { replace: true });
+      } else {
+        setIsInfoTooltipState("fail");
+      }
+    });
+  };
+
+  const handleSignout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    setCurrentUser(null);
+  };
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
@@ -76,8 +112,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsDeleteCardPopupOpen(false);
-    setIsSuccessPopupOpen(false);
-    setIsFailPopupOpen(false);
+    setIsInfoTooltipState("close");
     setSelectedCard(null);
   };
 
@@ -147,7 +182,7 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <Header setCurrentUser={setCurrentUser} setIsLoggedIn={setIsLoggedIn} />
+      <Header handleSignout={handleSignout} />
       <Routes>
         <Route
           path='/'
@@ -169,22 +204,10 @@ function App() {
         />
         <Route
           path='/sign-up'
-          element={
-            <Register
-              setIsFailPopupOpen={setIsFailPopupOpen}
-              setIsSuccessPopupOpen={setIsSuccessPopupOpen}
-            />
-          }
+          element={<Register handleRegister={handleRegister} />}
         />
-        <Route
-          path='/sign-in'
-          element={
-            <Login
-              setIsLoggedIn={setIsLoggedIn}
-              setIsFailPopupOpen={setIsFailPopupOpen}
-            />
-          }
-        />
+        <Route path='/sign-in' element={<Login handleLogin={handleLogin} />} />
+        <Route path='*' element={<Navigate to='/' />} />
       </Routes>
       <Footer />
 
@@ -217,8 +240,7 @@ function App() {
         </>
       )}
       <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-      <SuccessPopup isOpen={isSuccessPopupOpen} onClose={closeAllPopups} />
-      <FailPopup isOpen={isFailPopupOpen} onClose={closeAllPopups} />
+      <InfoTooltip isOpen={InfoTooltipState} onClose={closeAllPopups} />
     </CurrentUserContext.Provider>
   );
 }
