@@ -1,11 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  Route,
-  Routes,
-  useNavigate,
-  redirect,
-  Navigate,
-} from "react-router-dom";
+import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -39,8 +33,12 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setIsLoggedIn(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isLoggedIn) {
       auth.tokenCheck(localStorage.getItem("token")).then((res) => {
-        setIsLoggedIn(true);
         api
           .getUserInfo()
           .then((data) => {
@@ -188,7 +186,6 @@ function App() {
           path='/'
           element={
             <ProtectedRoute
-              currentUser={currentUser}
               element={Main}
               onEditProfile={handleEditProfileClick}
               onAddPlace={handleAddPlaceClick}
@@ -199,6 +196,7 @@ function App() {
               cards={cards}
               onCardDelete={handleDeleteCardClick}
               isLoggedIn={isLoggedIn}
+              currentUser={currentUser}
             ></ProtectedRoute>
           }
         />
