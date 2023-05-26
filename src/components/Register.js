@@ -1,4 +1,5 @@
-﻿import { Link } from "react-router-dom";
+﻿import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useFormAndValidation } from "../hooks/useFormAndValidation";
 
 function Register({ handleRegister }) {
@@ -11,6 +12,10 @@ function Register({ handleRegister }) {
       handleRegister(values.email, values.password);
     }
   };
+
+  useEffect(() => {
+    setValues({ email: "", password: "" });
+  }, []);
 
   const buttonClassName = `main__button ${
     !isValid ? "main__button_disabled" : ""

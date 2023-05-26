@@ -1,4 +1,5 @@
-﻿import { useFormAndValidation } from "../hooks/useFormAndValidation";
+﻿import { useEffect } from "react";
+import { useFormAndValidation } from "../hooks/useFormAndValidation";
 
 function Login({ handleLogin }) {
   const { values, handleChange, errors, isValid, setValues, resetForm } =
@@ -10,6 +11,10 @@ function Login({ handleLogin }) {
       handleLogin(values.email, values.password);
     }
   };
+
+  useEffect(() => {
+    setValues({ email: "", password: "" });
+  }, []);
 
   const buttonClassName = `main__button ${
     !isValid ? "main__button_disabled" : ""
