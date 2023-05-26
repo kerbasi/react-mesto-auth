@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
-import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  useNavigate,
+  Navigate,
+  redirect,
+} from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -52,6 +58,7 @@ function App() {
           })
           .catch((err) => console.log(err));
       });
+      navigate("/", { replace: true });
     }
   }, [isLoggedIn]);
 

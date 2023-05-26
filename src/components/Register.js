@@ -1,13 +1,9 @@
-﻿import { useState } from "react";
-import { Link } from "react-router-dom";
+﻿import { Link } from "react-router-dom";
+import { useFormAndValidation } from "../hooks/useFormAndValidation";
 
 function Register({ handleRegister }) {
-  const [values, setValues] = useState({ email: "", password: "" });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
-  };
+  const { values, handleChange, errors, isValid, setValues, resetForm } =
+    useFormAndValidation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,6 +11,10 @@ function Register({ handleRegister }) {
       handleRegister(values.email, values.password);
     }
   };
+
+  const buttonClassName = `main__button ${
+    !isValid ? "main__button_disabled" : ""
+  }`;
 
   return (
     <main className='main page__main page__main_form'>
@@ -28,6 +28,7 @@ function Register({ handleRegister }) {
           value={values.email}
           onChange={handleChange}
         ></input>
+        <span className='popup__error'>{errors.email}</span>
         <input
           name='password'
           className='main__input'
@@ -35,8 +36,12 @@ function Register({ handleRegister }) {
           placeholder='Пароль'
           value={values.password}
           onChange={handleChange}
+          minLength='2'
         ></input>
-        <button className='main__button'>Зарегистрироваться</button>
+        <span className='popup__error'>{errors.password}</span>
+        <button type='submit' className={buttonClassName} disabled={!isValid}>
+          Зарегистрироваться
+        </button>
         <Link className='main__link' to='/sign-in'>
           Уже зарегистрированы? Войти
         </Link>

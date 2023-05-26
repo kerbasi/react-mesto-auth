@@ -1,7 +1,7 @@
 ﻿.page__header {
   width: 100%;
   max-width: 880px;
-  margin: 45px auto 0px;
+  margin: 0 auto;
 }
 
 @media screen and (max-width: 1024px) {

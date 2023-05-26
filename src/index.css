@@ -16,6 +16,7 @@
 @import url(./blocks/main/__form/main__form.css);
 @import url(./blocks/main/__input/main__input.css);
 @import url(./blocks/main/__button/main__button.css);
+@import url(./blocks/main/__button/_disabled/main__button_disabled.css);
 @import url(./blocks/main/__link/main__link.css);
 @import url(./blocks/profile/profile.css);
 @import url(./blocks/profile/__avatar-wrapper/profile__avatar-wrapper.css);

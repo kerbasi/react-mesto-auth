@@ -1,0 +1,11 @@
+﻿.main__button_disabled {
+  opacity: 0.2;
+  border: 1px solid #000000;
+  color: #000000;
+  background: #ccc;
+}
+
+.main__button_disabled:hover {
+  opacity: 0.2;
+  cursor: auto;
+}

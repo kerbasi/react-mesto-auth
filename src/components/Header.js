@@ -11,7 +11,9 @@ function Header({ handleSignout }) {
   };
   return (
     <header className='header page__header'>
-      <img src={logoPath} alt='лого место' className='header__logo' />
+      <Link to='/'>
+        <img src={logoPath} alt='лого место' className='header__logo' />
+      </Link>
       <nav className='header__nav'>
         {currentUser ? (
           <>
