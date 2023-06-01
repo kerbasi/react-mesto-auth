@@ -35,7 +35,7 @@ function Login({ handleLogin }) {
           className='main__input'
           type='email'
           placeholder='Email'
-          value={values.email}
+          value={values.email || ""}
           onChange={handleChange}
         ></input>
         <span className='popup__error'>{errors.email}</span>
@@ -45,7 +45,7 @@ function Login({ handleLogin }) {
           className='main__input'
           type='password'
           placeholder='Пароль'
-          value={values.password}
+          value={values.password || ""}
           onChange={handleChange}
           minLength='2'
         ></input>

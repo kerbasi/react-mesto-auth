@@ -63,26 +63,32 @@ function App() {
   }, [isLoggedIn]);
 
   const handleRegister = (email, password) => {
-    auth.register(email, password).then((res) => {
-      if (res) {
-        setIsInfoTooltipState("success");
-        navigate("/sign-in", { replace: true });
-      } else {
-        setIsInfoTooltipState("fail");
-      }
-    });
+    auth
+      .register(email, password)
+      .then((res) => {
+        if (res) {
+          setIsInfoTooltipState("success");
+          navigate("/sign-in", { replace: true });
+        } else {
+          setIsInfoTooltipState("fail");
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleLogin = (email, password) => {
-    auth.login(email, password).then((res) => {
-      if (res) {
-        localStorage.setItem("token", res.token);
-        setIsLoggedIn(true);
-        navigate("/", { replace: true });
-      } else {
-        setIsInfoTooltipState("fail");
-      }
-    });
+    auth
+      .login(email, password)
+      .then((res) => {
+        if (res) {
+          localStorage.setItem("token", res.token);
+          setIsLoggedIn(true);
+          navigate("/", { replace: true });
+        } else {
+          setIsInfoTooltipState("fail");
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleSignout = () => {

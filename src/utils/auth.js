@@ -1,70 +1,56 @@
-﻿export const BASE_URL = "https://auth.nomoreparties.co";
+﻿export const BASE_URL = "https://auth.nomoreparties.co/";
+
+const getResponseData = (res, status) => {
+  if (!res.ok || (status && res.status !== status)) {
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+  return res.json();
+};
+
+const request = (endPoint, options, status) => {
+  return fetch(`${BASE_URL + endPoint}`, options).then((res) =>
+    getResponseData(res, status)
+  );
+};
 
 export const register = (email, password) => {
-  return fetch(`${BASE_URL}/signup`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  return request(
+    "signup",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
     },
-    body: JSON.stringify({ email, password }),
-  })
-    .then((response) => {
-      try {
-        if (response.status === 201) {
-          return response.json();
-        }
-      } catch (e) {
-        return e;
-      }
-    })
-    .then((res) => {
-      return res;
-    })
-    .catch((err) => console.log(err));
+    201
+  );
 };
 
 export const login = (email, password) => {
-  return fetch(`${BASE_URL}/signin`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  return request(
+    "signin",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
     },
-    body: JSON.stringify({ email, password }),
-  })
-    .then((response) => {
-      try {
-        if (response.status === 200) {
-          return response.json();
-        }
-      } catch (e) {
-        return e;
-      }
-    })
-    .then((res) => {
-      return res;
-    })
-    .catch((err) => console.log(err));
+    200
+  );
 };
 
 export const tokenCheck = (token) => {
-  return fetch(`${BASE_URL}/users/me`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+  return request(
+    "users/me",
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     },
-  })
-    .then((response) => {
-      try {
-        if (response.status === 200) {
-          return response.json();
-        }
-      } catch (e) {
-        return e;
-      }
-    })
-    .then((res) => {
-      return res;
-    })
-    .catch((err) => console.log(err));
+    200
+  );
 };
